@@ -9,6 +9,7 @@ import java.util.Set;
 public class PrefixTreeNode implements IPrefixTreeNode{
 
 	private String prefix;
+	private int size;
 
 	private HashMap<String, IPrefixTreeNode> children;
 	
@@ -16,9 +17,10 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 		children = new HashMap<>();
 	}
 
-	public PrefixTreeNode(String string, IPrefixTreeNode newNode) {
-		children = new HashMap<>();
-		setNext(string, newNode);
+	public PrefixTreeNode(String word) {
+		this.children = new HashMap<>();
+		this.prefix = word;
+		this.size = word.length();
 	}
 	
 
