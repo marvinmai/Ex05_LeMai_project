@@ -10,7 +10,21 @@ public class PrefixTreeTest {
     public void testInsertion() {
         tree = new PrefixTree("Algorithmik");
 
+        tree.insert("Algorithmen");
+
+        tree.insert("Allerwertester");
+
         tree.insert("Algorithmikanalyse");
+
+        tree.insert("Algorithmikentwicklung");
+
+        tree.insert("Algorithmikanalyseentwicklung");
+
+        tree.insert("alles");
+
+        tree.insert("allesamt");
+
+        tree.insert("Ende");
 
         System.out.println(tree.toString());
     }

@@ -11,7 +11,7 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 	private String prefix;
 	private int size;
 
-	private HashMap<String, IPrefixTreeNode> children;
+	private Map<String, IPrefixTreeNode> children;
 	
 	public PrefixTreeNode() {
 		children = new HashMap<>();
@@ -27,6 +27,7 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 	@Override
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+		this.size = prefix.length();
 	}
 
 	@Override
@@ -45,6 +46,7 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 
 	@Override
 	public void setNext(String string ,IPrefixTreeNode node) {
+		if (children == null) children = new HashMap<>();
 		children.put(string, node);
 	}
 
@@ -54,9 +56,21 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 		return children.get(string);
 	}
 
-
 	@Override
 	public void removeChildren() {
-		this.children.clear();
+		this.children = null;
+	}
+
+	public Map<String, IPrefixTreeNode> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Map<String, IPrefixTreeNode> children) {
+		this.children = children;
+	}
+
+	@Override
+	public boolean hasChildren() {
+		return children.size() > 0;
 	}
 }

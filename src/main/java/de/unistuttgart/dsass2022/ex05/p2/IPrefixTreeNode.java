@@ -1,5 +1,6 @@
 package de.unistuttgart.dsass2022.ex05.p2;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,4 +50,12 @@ public interface IPrefixTreeNode {
 	 * Removes all children of the node
 	 */
 	public void removeChildren();
+
+	/**
+	 * returns all children of this node
+	 * @return all children
+	 */
+	public Map<String, IPrefixTreeNode> getChildren();
+
+	public boolean hasChildren();
 }
