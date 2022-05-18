@@ -24,7 +24,28 @@ public class PrefixTreeTest {
 
         tree.insert("allesamt");
 
-        tree.insert("Ende");
+        tree.insert("kanalisation");
+
+//        tree.insert("Ende");
+
+        System.out.println(tree.toString());
+    }
+
+    @Test
+    public void testInsertion2() {
+        tree = new PrefixTree("Database");
+
+        tree.insert("Datum");
+
+        tree.insert("Datenbank");
+
+        tree.insert("Datenbankmodell");
+
+        tree.insert("Datenbanksystem");
+
+
+        // does not work: inserted as Datenbanksystem-prach
+        tree.insert("Datenbanksprache");
 
         System.out.println(tree.toString());
     }

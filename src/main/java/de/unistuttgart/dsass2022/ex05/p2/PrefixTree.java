@@ -22,7 +22,7 @@ public class PrefixTree implements IPrefixTree {
 
 	/**
 	 * Cases when inserting:
-	 * 		1: no overlap - create new child of current currentNode
+	 * 		1: no overlap - create new child of currentNode
 	 * 		2: overlap - shorten current currentNode in case overlap<currentNode.size, insert shortened part and new currentNode part into new children
 	 * @param currentNode
 	 * @param insertWord
@@ -34,43 +34,17 @@ public class PrefixTree implements IPrefixTree {
 
 		if (overlapSize < currentNode.getPrefix().length() && overlapSize != 0) {
 			// case: there's a partial overlap with the current prefix: algorithm, alles
-
-			// store all children in temp if exists
-			Map<String, IPrefixTreeNode> tempChildren = null;
-			if (currentNode.hasChildren()) {
-				tempChildren = currentNode.getChildren();
-				currentNode.removeChildren();
-			}
-			// reduce current node prefix to first overlapping part of prefix
-			String currentPrefix = currentNode.getPrefix();
-			currentNode.setPrefix(currentNode.getPrefix().substring(0, overlapSize));
-			// create a new node with part of the current node prefix that was reduced in previous step and store edge
-			String newNodeEdge = String.valueOf(currentPrefix.charAt(overlapSize));
-			PrefixTreeNode newNode = new PrefixTreeNode(currentPrefix.substring(overlapSize + 1));
-			// create node with new part of the word that is inserted and store edge
-			String insertNodeEdge = String.valueOf(insertWord.charAt(overlapSize));
-			PrefixTreeNode insertNode = new PrefixTreeNode(insertWord.substring(overlapSize + 1));
-			// add stored original children of current node as children of new node
-			if (tempChildren != null) newNode.setChildren(tempChildren);
-			// add insertNode and newNode as children of reduced current node
-			currentNode.setNext(newNodeEdge, newNode);
-			currentNode.setNext(insertNodeEdge, insertNode);
+			insertWithPartialOverlap(currentNode, insertWord, overlapSize);
 
 			return currentNode;
-
 		} else if (overlapSize == currentNode.getPrefix().length()) {
 			// case: there is a match/complete overlap with the current currentNode: algorithm, algorithmanalysis
-			// don't change current currentNode and insert overlapping part of new word in to correct child, if exists
-			// otherwise create a new child
-			String edgeChar = insertWord.substring(currentNode.getPrefix().length(), currentNode.getPrefix().length() + 1);
-			String newWordPart = insertWord.substring(currentNode.getPrefix().length() + 1);
-			IPrefixTreeNode next = currentNode.getNode(edgeChar);
-			if (next != null) {
-				insert(next, newWordPart);
-			} else {
-				currentNode.setNext(edgeChar, new PrefixTreeNode(newWordPart));
-			}
+			insertWithCompleteOverlap(currentNode, insertWord);
+
+			return currentNode;
 		} else if (overlapSize == 0) {
+			// TODO
+			// cases: no overlap at all (current: alles, insert: ende)
 			// check if there's already an edge with the same beginning letter
 			String edgeString = insertWord.substring(0, 1);
 			IPrefixTreeNode nextNode = currentNode.getNode(edgeString);
@@ -81,6 +55,46 @@ public class PrefixTree implements IPrefixTree {
 			}
 		}
 		return currentNode;
+	}
+
+	private void insertWithCompleteOverlap(IPrefixTreeNode currentNode, String insertWord) {
+		// don't change current currentNode and insert overlapping part of new word into correct child, if exists
+		// otherwise create a new child
+		String insertNodeEdge = insertWord.substring(currentNode.getPrefix().length(), currentNode.getPrefix().length() + 1);
+		String insertWordPart = insertWord.substring(currentNode.getPrefix().length() + 1);
+		IPrefixTreeNode next = currentNode.getNode(insertNodeEdge);
+		if (next != null) {
+			insert(next, insertWordPart);
+		} else {
+			currentNode.setNext(insertNodeEdge, new PrefixTreeNode(insertWordPart));
+		}
+	}
+
+	private void insertWithPartialOverlap(IPrefixTreeNode currentNode, String insertWord, int overlapSize) {
+		// store all children in temp if exists
+		Map<String, IPrefixTreeNode> tempChildren = null;
+		if (currentNode.hasChildren()) {
+			tempChildren = currentNode.getChildren();
+			currentNode.removeChildren();
+		}
+		// reduce current node prefix to first overlapping part of prefix
+		String currentPrefix = currentNode.getPrefix();
+		currentNode.setPrefix(currentNode.getPrefix().substring(0, overlapSize));
+
+		// create a new node with part of the current node prefix that was reduced in previous step and store edge
+		String newNodeEdge = String.valueOf(currentPrefix.charAt(overlapSize));
+		PrefixTreeNode newNode = new PrefixTreeNode(currentPrefix.substring(overlapSize + 1));
+
+		// create node with new part of the word that is inserted and store edge
+		String insertNodeEdge = String.valueOf(insertWord.charAt(overlapSize));
+		PrefixTreeNode insertNode = new PrefixTreeNode(insertWord.substring(overlapSize + 1));
+
+		// add stored original children of current node as children of new node
+		if (tempChildren != null) newNode.setChildren(tempChildren);
+
+		// add insertNode and newNode as children of reduced current node
+		currentNode.setNext(newNodeEdge, newNode);
+		currentNode.setNext(insertNodeEdge, insertNode);
 	}
 
 	private int getOverlapSize(IPrefixTreeNode node, String newString) {
