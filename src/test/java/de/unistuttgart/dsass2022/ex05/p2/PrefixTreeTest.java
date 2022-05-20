@@ -4,45 +4,39 @@ import org.junit.Test;
 
 public class PrefixTreeTest {
 
-    IPrefixTree tree;
+    PrefixTree tree;
 
     @Test
     public void testInsertion() {
         tree = new PrefixTree("Alles");
 
         tree.insert("Algorithmen");
-
         tree.insert("Allerwertester");
-
         tree.insert("Algorithmikanalyse");
-
         tree.insert("Algorithmikentwicklung");
-
         tree.insert("Algorithmikanalyseentwicklung");
-
         tree.insert("Ende");
-
         tree.insert("allesamt");
-
         tree.insert("allesanders");
-
-        System.out.println(tree.toString());
+        tree.printTree();
     }
 
     @Test
     public void testInsertion2() {
-        // does not work correctly
         tree = new PrefixTree("Datenbank");
         tree.insert("Datenbanksystem");
         tree.insert("Datenbanksprache");
 
-        System.out.println();
+        tree.printTree();
 
-        // works correctly
-        tree = new PrefixTree("Datenbanksystem");
+        tree = new PrefixTree("Database");
+        tree.insert("Datenbank");
         tree.insert("Datenbanksprache");
+        tree.insert("Datenbankmodell");
+        tree.insert("Datenbanksystem");
+        tree.insert("Datum");
 
-        System.out.println();
+        tree.printTree();
     }
 
     @Test
@@ -52,7 +46,16 @@ public class PrefixTreeTest {
         tree.insert("Datenbrei");
         tree.insert("Dadrüben");
         tree.insert("Datus");
+        tree.insert("Datenbanksystem");
+        tree.insert("Datenbanksystem");
+        tree.insert("Datenbanksystem");
+        tree.insert("xylophon");
+        tree.insert("xylophonspieler*in");
+        tree.insert("xylophonkonzert");
+        tree.insert("xylophonspielende");
+        tree.insert("xylophonspieler*innen");
+        tree.insert("xanthan");
 
-        System.out.println(tree.toString());
+        tree.printTree();
     }
 }

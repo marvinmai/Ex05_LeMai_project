@@ -27,12 +27,27 @@ public class PrefixTree implements IPrefixTree {
 		}
 	}
 
+	public void printTree() {
+		printTree(root, "", "");
+	}
+
+	private void printTree(IPrefixTreeNode node, String previouslyBuiltWord, String space) {
+		previouslyBuiltWord += node.getPrefix();
+		System.out.println(space + previouslyBuiltWord);
+
+		String newWord;
+		for (Map.Entry<String, IPrefixTreeNode> child: node.getChildren().entrySet()) {
+			newWord = previouslyBuiltWord + child.getKey();
+			printTree(child.getValue(), newWord, space + "  ");
+		}
+	}
+
 	public IPrefixTreeNode insert(IPrefixTreeNode currentNode, String insertWord) {
 		if(insertWord.equalsIgnoreCase(currentNode.getPrefix())) return currentNode;
 
 		int overlapSize = getOverlapSize(currentNode, insertWord);
 
-		 if (overlapSize < currentNode.getPrefix().length() || overlapSize == 0) {
+		 if (!currentNode.getPrefix().isEmpty() && (overlapSize < currentNode.getPrefix().length() || overlapSize == 0)) {
 			// case: there's a partial or no overlap with the current prefix: algorithm, alles or alles, ende
 			insertWithPartialOverlap(currentNode, insertWord, overlapSize);
 		} else if (overlapSize == currentNode.getPrefix().length()) {
