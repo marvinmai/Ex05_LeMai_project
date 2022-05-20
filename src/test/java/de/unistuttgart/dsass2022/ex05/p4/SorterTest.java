@@ -12,5 +12,22 @@ import org.junit.Test;
 
 public class SorterTest {
 
+    @Test
+    public void heapSorterTest() {
+        ISimpleList<Integer> list = new SimpleList<>();
+        list.append(99);
+        list.append(7);
+        list.append(354);
+        list.append(37);
+        list.append(2635);
+        list.append(69);
+        list.append(8);
+        list.append(34);
+        list.append(85);
+
+        Sorter.heapSort(list);
+
+        Sorter.printHeap(list);
+    }
 
 }
