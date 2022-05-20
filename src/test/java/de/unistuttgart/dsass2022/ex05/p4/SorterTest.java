@@ -26,8 +26,6 @@ public class SorterTest {
         list.append(85);
 
         Sorter.heapSort(list);
-
-        Sorter.printHeap(list);
     }
 
 }

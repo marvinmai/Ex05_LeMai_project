@@ -2,21 +2,16 @@ package de.unistuttgart.dsass2022.ex05.p4;
 
 public class Sorter<T extends Comparable<T>> {
 
-    public static <T extends Comparable<T>> void heapSort(final ISimpleList<T> list) {
-
-        ISimpleList<T> heap = list;
-//        for (int i = 0; i < list.size(); i++) {
-//            heap.append(list.get(i));
-//        }
-
-        int last = heap.size() - 1;
-        while (last > 0) {
-            heap.swap(0, last);
-            sink(heap, 0, last);
-            last--;
+    public static <T extends Comparable<T>> void heapSort(final ISimpleList<T> heap) {
+        for (int i = heap.size() / 2; i >= 0; i--) {
+            sink(heap, i, heap.size());
         }
 
-        System.out.println();
+        for (int i = heap.size() - 1; i > 0; i--) {
+          heap.swap(0, i);
+          sink(heap, 0, i);
+        }
+        printHeap(heap);
     }
 
     private static <T extends Comparable<T>> void sink(ISimpleList<T> list, int index, int last) {
