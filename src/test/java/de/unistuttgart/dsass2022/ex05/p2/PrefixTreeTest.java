@@ -8,7 +8,7 @@ public class PrefixTreeTest {
 
     @Test
     public void testInsertion() {
-        tree = new PrefixTree("Algorithmik");
+        tree = new PrefixTree("Alles");
 
         tree.insert("Algorithmen");
 
@@ -20,32 +20,38 @@ public class PrefixTreeTest {
 
         tree.insert("Algorithmikanalyseentwicklung");
 
-        tree.insert("alles");
+        tree.insert("Ende");
 
         tree.insert("allesamt");
 
-        tree.insert("kanalisation");
-
-//        tree.insert("Ende");
+        tree.insert("allesanders");
 
         System.out.println(tree.toString());
     }
 
     @Test
     public void testInsertion2() {
-        tree = new PrefixTree("Database");
-
-        tree.insert("Datum");
-
-        tree.insert("Datenbank");
-
-        tree.insert("Datenbankmodell");
-
+        // does not work correctly
+        tree = new PrefixTree("Datenbank");
         tree.insert("Datenbanksystem");
-
-
-        // does not work: inserted as Datenbanksystem-prach
         tree.insert("Datenbanksprache");
+
+        System.out.println();
+
+        // works correctly
+        tree = new PrefixTree("Datenbanksystem");
+        tree.insert("Datenbanksprache");
+
+        System.out.println();
+    }
+
+    @Test
+    public void testInsertion3() {
+        tree = new PrefixTree("Datum");
+        tree.insert("Datenbanksystem");
+        tree.insert("Datenbrei");
+        tree.insert("Dadrüben");
+        tree.insert("Datus");
 
         System.out.println(tree.toString());
     }

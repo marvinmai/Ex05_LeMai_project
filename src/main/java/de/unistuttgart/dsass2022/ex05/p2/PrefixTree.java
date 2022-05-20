@@ -23,7 +23,7 @@ public class PrefixTree implements IPrefixTree {
 	/**
 	 * Cases when inserting:
 	 * 		1: no overlap - create new child of currentNode
-	 * 		2: overlap - shorten current currentNode in case overlap<currentNode.size, insert shortened part and new currentNode part into new children
+	 * 		2: overlap - shorten currentNode in case overlap<currentNode.size, insert shortened part and new currentNode part into new children
 	 * @param currentNode
 	 * @param insertWord
 	 */
@@ -32,27 +32,23 @@ public class PrefixTree implements IPrefixTree {
 
 		int overlapSize = getOverlapSize(currentNode, insertWord);
 
-		if (overlapSize < currentNode.getPrefix().length() && overlapSize != 0) {
-			// case: there's a partial overlap with the current prefix: algorithm, alles
-			insertWithPartialOverlap(currentNode, insertWord, overlapSize);
+		if (currentNode.getPrefix().isEmpty()) {
+			// case: current node has no prefix
+			// if theres a child with a matching edge, insert there
+			// otherwise create a new children
 
-			return currentNode;
+			IPrefixTreeNode child = currentNode.getNode(insertWord.substring(0, 1));
+			if (child == null) {
+				currentNode.setNext(insertWord.substring(0, 1), new PrefixTreeNode(insertWord.substring(1)));
+			} else {
+				insert(child, insertWord.substring(1));
+			}
+		} else if (overlapSize < currentNode.getPrefix().length() || overlapSize == 0) {
+			// case: there's a partial or no overlap with the current prefix: algorithm, alles or alles, ende
+			insertWithPartialOverlap(currentNode, insertWord, overlapSize);
 		} else if (overlapSize == currentNode.getPrefix().length()) {
 			// case: there is a match/complete overlap with the current currentNode: algorithm, algorithmanalysis
 			insertWithCompleteOverlap(currentNode, insertWord);
-
-			return currentNode;
-		} else if (overlapSize == 0) {
-			// TODO
-			// cases: no overlap at all (current: alles, insert: ende)
-			// check if there's already an edge with the same beginning letter
-			String edgeString = insertWord.substring(0, 1);
-			IPrefixTreeNode nextNode = currentNode.getNode(edgeString);
-			if (nextNode == null) {
-				currentNode.setNext(edgeString, new PrefixTreeNode(insertWord.substring(1, insertWord.length() - 1)));
-			} else {
-				insert(nextNode, insertWord.substring(1, insertWord.length() - 1));
-			}
 		}
 		return currentNode;
 	}
