@@ -17,17 +17,24 @@ public class Sorter<T extends Comparable<T>> {
     private static <T extends Comparable<T>> void sink(ISimpleList<T> list, int index, int last) {
         int i = index + 1;
         int j;
+        // while i has left child
         while (2 * i <= last) {
+            // j is left child of i
             j = 2 * i;
+            // right child of i exists
             if (j < last) {
+                // j is smaller
                 if (list.get(j - 1).compareTo(list.get(j)) > 0) {
                     j++;
                 }
             }
+            // compare parent with child
             if (list.get(i - 1).compareTo(list.get(j - 1)) > 0) {
                 list.swap(i - 1, j - 1);
+                // continue to sink
                 i = j;
             } else {
+                // heap condition met
                 break;
             }
         }
@@ -76,7 +83,12 @@ public class Sorter<T extends Comparable<T>> {
             }
             hs.insert(0, line.toString() + "\n");  // prepend line
         }
-        System.out.println(hs.toString());
+        System.out.println(hs);
+
+        for (int i = 0; i < heap.size(); i++) {
+            System.out.print(heap.get(i) + " ");
+        }
+        System.out.println();
     }
 
 }
