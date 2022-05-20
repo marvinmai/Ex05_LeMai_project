@@ -12,17 +12,12 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 	private int size;
 
 	private Map<String, IPrefixTreeNode> children;
-	
-	public PrefixTreeNode() {
-		children = new HashMap<>();
-	}
 
 	public PrefixTreeNode(String word) {
 		this.children = new HashMap<>();
 		this.prefix = word;
 		this.size = word.length();
 	}
-	
 
 	@Override
 	public void setPrefix(String prefix) {
@@ -61,16 +56,16 @@ public class PrefixTreeNode implements IPrefixTreeNode{
 		this.children = null;
 	}
 
+	@Override
+	public boolean hasChildren() {
+		return children.size() > 0;
+	}
+
 	public Map<String, IPrefixTreeNode> getChildren() {
 		return children;
 	}
 
 	public void setChildren(Map<String, IPrefixTreeNode> children) {
 		this.children = children;
-	}
-
-	@Override
-	public boolean hasChildren() {
-		return children.size() > 0;
 	}
 }
