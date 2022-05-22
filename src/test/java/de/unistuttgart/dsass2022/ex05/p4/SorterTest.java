@@ -28,4 +28,11 @@ public class SorterTest {
         Sorter.heapSort(list);
     }
 
+    @Test
+    public void heapSorterTestEmpty() {
+        ISimpleList<Integer> list = new SimpleList<>();
+
+        Sorter.heapSort(list);
+    }
+
 }
